@@ -1,9 +1,11 @@
-// freedom/interface/social.js
+/**
+ * freedom/interface/social.js
+ **/
 
 /// <reference path='promise.d.ts' />
 
-// Interfaces for social
-declare module Freedom.social {
+// Interfaces for Freedom social API
+declare module freedom.Social {
   // TODO(Freedom): would be nice for Freedom to have an enum of all 'valid'
   // event types for each provider. That way code can avoid depending on
   // strings.
@@ -93,8 +95,9 @@ declare module Freedom.social {
 }  // declare module Freedom.social
 
 
-declare module Freedom {
-  class social {
+// The Freedom social class
+declare module freedom {
+  class Social {
     /**
      * Generic Freedom Event stuff. |on| binds an event handler to event type
      * |eventType|. Every time |eventType|  event is raised, the function |f|
@@ -103,13 +106,13 @@ declare module Freedom {
     // Message type |onMessage| happens when the user receives a message from
     // another contact.
     on(eventType:string, f:Function) : void;
-    on(eventType:'onMessage', f:(message:social.IncomingMessage)=>void) : void;
+    on(eventType:'onMessage', f:(message:Social.IncomingMessage)=>void) : void;
     // Message type |onRosterProfile| events are received when another user's
     // profile is received or when a client changes status.
-    on(eventType:'onUserProfile', f:(profile:social.UserProfile)=>void) : void;
+    on(eventType:'onUserProfile', f:(profile:Social.UserProfile)=>void) : void;
     // Message type |onMyStatus| is received when the user's client's status
     // changes, e.g. when disconnected and online status becomes offline.
-    on(eventType:'onClientState', f:(status:social.ClientState)=>void) : void;
+    on(eventType:'onClientState', f:(status:Social.ClientState)=>void) : void;
     /**
      * Do a singleton event binding: |f| will only be called once, on the next
      * event of type |eventType|. Same events as above.
@@ -120,19 +123,19 @@ declare module Freedom {
      * Log into the network. The promise succeeds once the user is logged in
      * and gives back the userId and clientId.
      **/
-    login(loginRequest:social.LoginRequest) : Promise<social.ClientState>;
+    login(loginRequest:Social.LoginRequest) : Promise<Social.ClientState>;
 
     /**
      * Returns the current snapshot of the roster with all current known
      * profiles. Note: the user's own profile will be somewhere in this list.
      **/
-    getRoster() : Promise<social.Roster>;
+    getRoster() : Promise<Social.Roster>;
 
     /**
      * Get the list of all clients that are not offline (online or online with
      * another client)
      **/
-    getClients() : Promise<social.Clients>;
+    getClients() : Promise<Social.Clients>;
 
     /**
      * Send a message to user on your network

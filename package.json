@@ -1,0 +1,22 @@
+{
+  "name": "freedom-typescript-api",
+  "description": "TypeScript Interface for Freedom",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freedomjs/typescript-api"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-env": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.6.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-ts": "~1.6.4",
+    "freedom": "~0.3.2"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  }
+}
