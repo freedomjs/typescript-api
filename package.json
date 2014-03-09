@@ -13,10 +13,21 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-ts": "~1.6.4",
-    "freedom": "~0.3.2"
+    "grunt-typescript": "~0.2.7",
+    "freedom": "~0.3.3"
   },
   "scripts": {
     "test": "grunt --verbose"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/freedomjs/typescript-api/issues"
+  },
+  "homepage": "https://github.com/freedomjs/typescript-api",
+  "main": "README.md",
+  "keywords": [
+    "typescript",
+    "freedom"
+  ],
+  "author": "Lucas Dixon <ldixon@google.com> (https://github.com/iislucas)",
+  "license": "Apache2"
 }
