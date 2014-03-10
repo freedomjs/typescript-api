@@ -19,7 +19,15 @@ declare module freedom.UdpSocket {
     resultCode:number;
     address:string;
     port:number;
-    data:ArrayBuffer
+    data:ArrayBuffer;
+  }
+
+  //
+  export interface Implementation {
+    bind(address:string, port:number, continuation:(result:number) => void) : void;
+    sendTo(data:ArrayBuffer, address:string, port:number,
+            continuation:(bytesWritten:number) => void) : void;
+    destroy(continuation:() => void) : void;
   }
 }
 
@@ -27,7 +35,6 @@ declare module freedom {
   class UdpSocket {
     bind:any;
     sendTo:any;
-    getInfo:any;
     destroy:any;
     on:any;
   }

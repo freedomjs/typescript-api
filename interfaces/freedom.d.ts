@@ -5,10 +5,14 @@ declare module freedom {
     on(eventType:string, handler:Function) : void;
   }
   interface Channel {
-    channel : Port
+    channel : Port;
+    identifier: string;
   }
   interface Core {
     createChannel() : Promise<Channel>
   }
   function core() : Core
+
+  function on(eventType : string, f : Function) : void
+  function emit(eventType : string, value : Object) : void
 }
