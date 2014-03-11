@@ -22,12 +22,12 @@ declare module freedom.UdpSocket {
     data:ArrayBuffer;
   }
 
-  //
   export interface Implementation {
     bind(address:string, port:number, continuation:(result:number) => void) : void;
     sendTo(data:ArrayBuffer, address:string, port:number,
             continuation:(bytesWritten:number) => void) : void;
     destroy(continuation:() => void) : void;
+    getInfo(continuation:(socketInfo:SocketInfo) => void) : void;
   }
 }
 
@@ -37,5 +37,6 @@ declare module freedom {
     sendTo:any;
     destroy:any;
     on:any;
+    getInfo:any;
   }
 }
