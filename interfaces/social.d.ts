@@ -6,60 +6,55 @@
 
 // Interfaces for Freedom social API
 declare module freedom.Social {
+  // Freedom errors that may happen during login, etc.
+  enum ERRCODE {
+    LOGIN_BADCREDENTIALS,
+    LOGIN_FAILEDCONNECTION,
+    LOGIN_ALREADYONLINE,
+    SEND_INVALIDDESTINATION
+  }
+
   // TODO(Freedom): would be nice for Freedom to have an enum of all 'valid'
   // event types for each provider. That way code can avoid depending on
   // strings.
   enum EVENT {
-    onMessage, // A message is received.
+    // A message is received.
+    onMessage,
     // A profile update is recieved (ours ) or changes
     onUserProfile,
     // A status has changed; either the user's or a clients.
     onClientState
   }
 
-  // Error numbers for things that can go wrong and be given in an promise
-  // rejection.
-  //
-  // enum ERROR {
-  //   ...
-  // }
-
-  // Status indicates whether a client is online, offline, or online with
-  // another client which means they can receve chat messages, but are not
-  // expected to react to them in whatever way this application does.
+  // Status of a client; used for both this client (in which case it will be
+  // either ONLINE or OFFLINE)
   enum Status {
-    // Not connected.
     OFFLINE,
-    // Online with the same application (we can send them messages)
+    // This client runs the same freedom.js app as you and is online
     ONLINE,
-    // Messages will appear as chat to the client
-    ONLINE_WITH_OTHER_CLIENT,
+    // This client is online, but not with the same application/agent type
+    // (i.e. can be useful to invite others to your freedom.js app)
+    ONLINE_WITH_OTHER_APP,
   }
 
   // Status of a client connected to a social network.
   interface ClientState {
-    userId: string;
-    clientId: string;
-    status: Status;
+    userId    :string;
+    clientId  :string;
+    status    :Status;
+    timestamp :number;
   }
 
   // The profile of a user on a social network.
   interface UserProfile {
-    // The userId for the chat network
-    userId: string;
-    // Optional social network specific details
-    // Name of the user.
-    name?: string;
-    // Homepage URL (e.g. https://alice.com)
-    url?: string;
-    // Image Data URI (e.g. data:image/png;base64,adkwe329...)
-    imageDataUri?: string;
+    userId       :string;
+    name         ?:string;
+    url          ?:string;
+    imageDataUri ?:string; // Image URI (e.g. data:image/png;base64,adkwe329...)
+    timestamp    :number;
   }
 
-  // Roster is a map from userIds to the relevant rosterEntry
-  interface Roster { [userId:string] : UserProfile; }
-
-  // Cleints is a map from clientIds to the relevant status of that client.
+  interface Users   { [userId:string]   : UserProfile; }
   interface Clients { [clientId:string] : ClientState; }
 
   /**
@@ -67,9 +62,9 @@ declare module freedom.Social {
    **/
   interface IncomingMessage {
     // UserID/ClientID/status of user from whom the message comes from.
-    from: ClientState;
+    from     :ClientState;
     // Message contents.
-    message: string;
+    message  :string;
   }
 
   // A request to login to a specific network as a specific agent
@@ -77,20 +72,18 @@ declare module freedom.Social {
     // Name of the application connecting to the network. Other logins with the
     // same agent field will be listed as having status |ONLINE|, where those
     // with different agents will be listed as |ONLINE_WITH_OTHER_CLIENT|
-    agent: string;
+    agent          :string;
     // Version of application
-    version: string;
+    version        :string;
     // URL of application
-    url: string;
+    url            :string;
     // When |interactive === true| social will always prompt user for login.
     // Promise fails if the user did not login or provided invalid credentials.
     // When |interactive === false|, promise fails unless the social provider
     // has  cached tokens/credentials.
-    interactive: boolean;
+    interactive    :boolean;
     // When true, social provider will remember the token/credentials.
-    rememberLogin: boolean;
-    // Optional user Id to login as.
-    userId?: string;
+    rememberLogin  :boolean;
   }
 }  // declare module Freedom.social
 
@@ -119,22 +112,8 @@ declare module freedom {
      **/
     once(eventType:string, f:Function) : void;
 
-    /**
-     * Log into the network. The promise succeeds once the user is logged in
-     * and gives back the userId and clientId.
-     **/
     login(loginRequest:Social.LoginRequest) : Promise<Social.ClientState>;
-
-    /**
-     * Returns the current snapshot of the roster with all current known
-     * profiles. Note: the user's own profile will be somewhere in this list.
-     **/
-    getRoster() : Promise<Social.Roster>;
-
-    /**
-     * Get the list of all clients that are not offline (online or online with
-     * another client)
-     **/
+    getUsers() : Promise<Social.Users>;
     getClients() : Promise<Social.Clients>;
 
     /**
@@ -146,8 +125,8 @@ declare module freedom {
     sendMessage(destinationId:string, message:string) : Promise<void>;
 
     /**
-     * Logs the user out of the social network.
-     * After the logout promise, the user status is OFFLINE.
+     * Logs the user out of the social network. After the logout promise, the
+     * user status is OFFLINE.
      **/
     logout() : Promise<void>;
 

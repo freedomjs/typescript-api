@@ -27,3 +27,7 @@ declare module freedom {
   function on(eventType : string, f : Function) : void
   function emit(eventType : string, value : Object) : void
 }
+
+interface Window {
+  freedomcfg(register:(providerName:string, classFn:Function) => void) : void;
+}
