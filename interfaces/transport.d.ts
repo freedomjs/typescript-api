@@ -22,6 +22,6 @@ declare module freedom {
 
     on(eventType:string, f:Function) : void;
     on(eventType:'onData', f:(message:Transport.IncomingMessage) => void) : void;
-    on(eventType:'close', f:() => void) : void;
+    on(eventType:'onClose', f:() => void) : void;
   }
 }
