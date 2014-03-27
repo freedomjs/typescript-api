@@ -5,8 +5,8 @@
 // The data types used by TcpSocket
 declare module freedom.TcpSocket {
   export interface DisconnectInfo {
-    socketId:number;
-    error:string;
+    errcode :number;
+    message :string;
   }
 
   export interface ReadInfo {
@@ -16,9 +16,6 @@ declare module freedom.TcpSocket {
 
   export interface WriteInfo {
     bytesWritten: number;
-  }
-
-  export interface SocketOptions {
   }
 
   export interface SocketInfo {
