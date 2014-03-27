@@ -4,10 +4,6 @@
 
 // The data types used by TcpSocket
 declare module freedom.TcpSocket {
-  export interface CreateInfo {
-    socketId:number;
-  }
-
   export interface DisconnectInfo {
     socketId:number;
     error:string;
@@ -36,30 +32,25 @@ declare module freedom.TcpSocket {
 
   // TODO: move to tcp socket implementation; drop the type argument.
   export interface Implementation {
-    create(type:string, options:SocketOptions,
-        continuation:(createInfo:CreateInfo) => void): void;
-    write(socketId:number, data:ArrayBuffer,
+    write(data:ArrayBuffer,
         continuation:(writeInfo:WriteInfo) => void): void;
-    getInfo(socketId:number, continuation:(result:SocketInfo) => void): void;
-    connect(socketId:number, hostname:string, port:number,
+    getInfo(continuation:(result:SocketInfo) => void): void;
+    connect(hostname:string, port:number,
         continuation:(result:number) => void): void;
-    listen(socketId:number, address:string, port:number,
+    listen(address:string, port:number,
         continuation: (result: number) => void): void;
-    destroy(socketId:number, continuation:() => void): void;
-    disconnect(socketId:number, continuation:() => void): void;
+    close(continuation:() => void): void;
   }
 }  // module Sockets
 
 // The TcpSocket class (freedom['core.TcpSocket'])
 declare module freedom {
   class TcpSocket {
-    create:any;
     listen:any;
     connect:any;
     write:any;
     getInfo:any;
-    disconnect:any;
-    destroy:any;
+    close:any;
     on:any;
   }
 }
