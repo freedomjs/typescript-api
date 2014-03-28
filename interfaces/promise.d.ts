@@ -25,11 +25,13 @@ declare class Promise<T> {
   constructor(resolverFunction:(fulfill:(t?:T) => void,
                                 reject:(e:Error) => void) => void);
 
-  // then either returns subsiquent promise<T2> ...
+  // then()'s fulfill is always required, while reject is optional.
+  // The fulfill can either return subsequent promise<T2> ...
   then<T2>(fulfill:(t:T) => Promise<T2>, reject?:(e:Error) => Promise<T2>)
       : Promise<T2>;
-  // ... or the next fulfillment object directly.
-  then<T2>(fulfill?:(t:T) => T2, reject?:(e:Error) => T2) : Promise<T2>;
+  // ... or the next fulfillment object directly, or nothing at all.
+  then<T2>(fulfill:(t?:T) => T2, reject?:(e:Error) => T2) : Promise<T2>;
+  then<T2>(fulfill:(t?:T) => void, reject?:(e:Error) => void) : Promise<T2>;
 
   catch(catchFn:(e:Error) => Promise<T>) : Promise<T>;
   catch(catchFn:(e:Error) => T) : Promise<T>;
