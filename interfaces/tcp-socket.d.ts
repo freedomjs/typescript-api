@@ -10,24 +10,21 @@ declare module freedom.TcpSocket {
   }
 
   export interface ReadInfo {
-    socketId:number;
-    data:ArrayBuffer;
+    data :ArrayBuffer;
   }
 
   export interface WriteInfo {
-    bytesWritten: number;
+    bytesWritten :number;
   }
 
   export interface SocketInfo {
-    socketType: string;
-    localPort?: number;
-    peerAddress?: string;
-    peerPort?: number;
-    localAddress?: string;
-    connected: boolean;
+    connected :boolean;
+    localPort :number;
+    peerAddress :string;
+    peerPort :number;
+    localAddress :string;
   }
 
-  // TODO: move to tcp socket implementation; drop the type argument.
   export interface Implementation {
     write(data:ArrayBuffer,
         continuation:(writeInfo:WriteInfo) => void): void;
