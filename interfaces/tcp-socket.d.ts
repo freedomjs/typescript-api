@@ -29,11 +29,11 @@ declare module freedom.TcpSocket {
 // The TcpSocket class (freedom['core.TcpSocket'])
 declare module freedom {
   export interface TcpSocket {
-    listen(address:string, port:number) : Promise<any>;
+    listen(address:string, port:number) : Promise<void>;
     connect(hostname :string, port :number) : Promise<void>;
     write(data :ArrayBuffer) : Promise<freedom.TcpSocket.WriteInfo>;
     getInfo() : Promise<freedom.TcpSocket.SocketInfo>;
     close() : Promise<void>;
-    on :any;
+    on(type: string, callback: Function) : void;
   }
 }
