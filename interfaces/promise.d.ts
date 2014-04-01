@@ -26,10 +26,12 @@ declare class Promise<T> {
                                 reject:(e:Error) => void) => void);
 
   // then either returns subsiquent promise<T2> ...
-  then<T2>(fulfill:(t:T) => Promise<T2>, reject?:(e:Error) => Promise<T2>)
+  then<T2>(fulfill:(t?:T) => Promise<T2>, reject?:(e:Error) => Promise<T2>)
       : Promise<T2>;
-  // ... or the next fulfillment object directly.
-  then<T2>(fulfill?:(t:T) => T2, reject?:(e:Error) => T2) : Promise<T2>;
+  // ... or the next fulfillment object directly ...
+  then<T2>(fulfill:(t?:T) => T2, reject?:(e:Error) => T2) : Promise<T2>;
+  // ... or full and error handlers return void.
+  then(fulfill:(t?:T) => void, reject?:(e:Error) => void) : Promise<void>;
 
   catch(catchFn:(e:Error) => Promise<T>) : Promise<T>;
   catch(catchFn:(e:Error) => T) : Promise<T>;
@@ -41,6 +43,6 @@ declare class Promise<T> {
 
   static reject<T>(e:Error) : Promise<T>;
 
-  static all<T>(...args:Thenable<T>[]) : Promise<T>;
+  static all<T>(promiseArray:Thenable<T>[]) : Promise<T>;
   static race<T>(...args:Thenable<T>[]) : Promise<T>;
 }
