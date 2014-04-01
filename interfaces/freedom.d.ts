@@ -46,8 +46,8 @@ declare module freedom {
 
   // Communicate with the parent module. If this is the outer-page, then
   // communicates with the root module.
-  function on(eventType:string, f:Function) : void
-  function emit(eventType:string, value:Object) : void
+  function on(eventType:string, eventHandler:Function) : void
+  function emit(eventType:string, value :Object) : void
 }
 
 interface Window {
