@@ -42,6 +42,8 @@ declare class Promise<T> {
   static resolve() : Promise<void>;
 
   static reject<T>(e:Error) : Promise<T>;
+  // Allow casting of Promise.reject to Promise<void>.
+  static reject() : Promise<void>;
 
   static all<T>(promiseArray:Thenable<T>[]) : Promise<T>;
   static race<T>(...args:Thenable<T>[]) : Promise<T>;
