@@ -1,7 +1,7 @@
 {
   "name": "freedom-typescript-api",
   "description": "TypeScript Interface for Freedom",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/freedomjs/typescript-api"
