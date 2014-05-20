@@ -39,7 +39,7 @@ declare module freedom.Social {
     userId       :string;
     name         ?:string;
     url          ?:string;
-    imageDataUri ?:string; // Image URI (e.g. data:image/png;base64,adkwe329...)
+    imageData    ?:string; // Image URI (e.g. data:image/png;base64,adkwe329...)
     timestamp    :number;
   }
 
