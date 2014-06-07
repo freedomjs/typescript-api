@@ -4,7 +4,7 @@
  * Typescript definitions for the Freedom Storage API.
  */
 
-/// <reference path='promise.d.ts' />
+/// <reference path='../../third_party/promise/promise.d.ts' />
 
 // Interfaces for Freedom social API
 declare module freedom.Social {

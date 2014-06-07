@@ -1,4 +1,4 @@
-/// <reference path='promise.d.ts' />
+/// <reference path='../../third_party/promise/promise.d.ts' />
 
 declare module freedom {
   // Corresponds to Freedom object of type `proxy`.
@@ -31,14 +31,14 @@ declare module freedom {
       views :{ [viewName:string] : Object };
     };
     global :{
-      removeEventListener :(string, Function, boolean) => void;
+      removeEventListener :(s:string, f:Function, b:boolean) => void;
     };
   }
 
   // Communicate with the parent module. If this is the outer-page, then
   // communicates with the root module.
-  function on(eventType:string, f :Function) : void
-  function emit(eventType:string, value :Object) : void
+  function on(eventType:string, f:Function) : void
+  function emit(eventType:string, value:Object) : void
 }
 
 interface Window {
