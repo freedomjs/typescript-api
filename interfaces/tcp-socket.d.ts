@@ -5,7 +5,7 @@
 // The data types used by TcpSocket
 declare module freedom.TcpSocket {
   export interface DisconnectInfo {
-    errcode :number;
+    errcode :string;
     message :string;
   }
 
@@ -19,21 +19,16 @@ declare module freedom.TcpSocket {
 
   export interface SocketInfo {
     connected :boolean;
+    localAddress :string;
     localPort :number;
     peerAddress :string;
     peerPort :number;
-    localAddress :string;
   }
 
-  export interface OnConnectInfo {
+  export interface ConnectInfo {
     socket :number;
     host :string;
     port :number;
-  }
-
-  export interface OnDisconnectInfo {
-    errcode :string;
-    message :string;
   }
 }  // module Sockets
 
@@ -47,8 +42,8 @@ declare module freedom {
     close() : Promise<void>;
     // TcpSockets have 3 types of events:
     on(eventType:string, f:Function) : void;
-    on(type:'onConnection', f:(i:TcpSocket.OnConnectInfo) => void) : void;
+    on(type:'onConnection', f:(i:TcpSocket.ConnectInfo) => void) : void;
     on(type:'onData', f:(i:TcpSocket.ReadInfo) => void) : void;
-    on(type:'onDisconnect', f:(i:TcpSocket.OnDisconnectInfo) => void) : void;
+    on(type:'onDisconnect', f:(i:TcpSocket.DisconnectInfo) => void) : void;
   }
 }
