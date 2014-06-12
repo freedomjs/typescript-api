@@ -1,4 +1,4 @@
-/// <reference path='promise.d.ts' />
+/// <reference path='../../third_party/promise/promise.d.ts' />
 
 declare module freedom {
   // Corresponds to Freedom object of type `proxy`.
@@ -8,8 +8,8 @@ declare module freedom {
   }
   // Specification for a channel.
   interface ChannelSpecifier {
-    channel : ProxyEventInterface;  // How to communicate over this channel.
-    identifier: string;  // identifier for the created channel
+    channel     :ProxyEventInterface;  // How to communicate over this channel.
+    identifier  :string;  // identifier for the created channel
   }
   interface Core {
     // Create a new channel which which to communicate between modules.
@@ -22,12 +22,26 @@ declare module freedom {
   }
   function core() : Core
 
+  // This is the first argument given to a core provider's constructor. It is an
+  // object that describes the parent module the core provider instance has been
+  // created for.
+  interface CoreProviderParentApp {
+    manifestId :string;
+    config :{
+      views :{ [viewName:string] : Object };
+    };
+    global :{
+      removeEventListener :(s:string, f:Function, b:boolean) => void;
+    };
+  }
+
   // Communicate with the parent module. If this is the outer-page, then
   // communicates with the root module.
-  function on(eventType : string, f : Function) : void
-  function emit(eventType : string, value : Object) : void
+  function on(eventType:string, f:Function) : void
+  function emit(eventType:string, value:Object) : void
 }
 
 interface Window {
+  // The freedom config call registers
   freedomcfg(register:(providerName:string, classFn:Function) => void) : void;
 }

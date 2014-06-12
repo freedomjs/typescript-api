@@ -1,7 +1,7 @@
 {
   "name": "freedom-typescript-api",
   "description": "TypeScript Interface for Freedom",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/freedomjs/typescript-api"
@@ -13,8 +13,8 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-typescript": "~0.2.7",
-    "freedom": "~0.3.3"
+    "grunt-typescript": "^0.3.0",
+    "freedom": "~0.4.4"
   },
   "scripts": {
     "test": "grunt --verbose"

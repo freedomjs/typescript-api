@@ -3,7 +3,7 @@
  * freedom/interface/transport.js in the Freedom source.
  */
 
-/// <reference path='promise.d.ts' />
+/// <reference path='../../third_party/promise/promise.d.ts' />
 
 declare module freedom.Transport {
   // onData events.
