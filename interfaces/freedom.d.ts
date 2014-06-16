@@ -1,6 +1,15 @@
 /// <reference path='../../third_party/promise/promise.d.ts' />
 
 declare module freedom {
+
+  /*
+  // for freedom 0.5, the contextual freedom code that loads up the module
+  // defines a property named by the module within the freedom object.
+  interface Provider {
+    providePromise(Object)
+  }
+  */
+
   // Corresponds to Freedom object of type `proxy`.
   interface ProxyEventInterface {
     on(eventType:string, handler:Function) : void;
