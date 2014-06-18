@@ -2,7 +2,7 @@
 
 // Reference:
 // https://github.com/UWNetworksLab/freedom/blob/master/interface/core.js
-/// <reference path='../third_party/promise/promise.d.ts' />
+/// <reference path='../../third_party/promise/promise.d.ts' />
 
 declare module freedom.PeerConnection {
   interface ChannelInfo {
@@ -26,30 +26,27 @@ declare module freedom {
   // `channelLabel`, not `channelId`, to be consistent with `onReceived`.
   class PeerConnection {
     // Setup a new peer connection.
-    setup :(freedomChannelId:string, // Freedom signalling channel id.
+    setup(freedomChannelId:string, // Freedom signalling channel id.
             debugName:string,  // used for debugging messages.
             stunServers:string[])
-          => Promise<void>;
+          : Promise<void>;
 
     // Send a message, if the channelLabel does not exist, it is created. TODO:
     // clarify semantics: does a channel created by this class raise an
     // `onOpenDataChannel` event?
-    send :(d:PeerConnection.ChannelMessage) => void;
-    on:(t:'onReceived', f:(d:PeerConnection.ChannelMessage) => void) => void
-
-    openDataChannel :(channelLabel:string) => void;
-    on:(t:'onOpenDataChannel', f:(d:PeerConnection.ChannelInfo) => void) => void
-
-    closeDataChannel :(channelLabel:string) => void;
-    on:(t:'onCloseDataChannel', f:(d:PeerConnection.ChannelInfo) => void) => void
-
-    close :() => void;
-    on:(t:'onClose', f:() => void) => void
-
-    // Given a channel Label, returns the buffered amount on that channel.
-    getBufferedAmount :(string) => Promise<number>;
+    send(d:PeerConnection.ChannelMessage) : void;
+    openDataChannel(channelLabel:string) : void;
+    closeDataChannel(channelLabel:string) : void;
+    close() : void;
 
     // Generic freedom `on` handler.
-    on:(event:string, f:Function) => void;
+    on(t:string, f:Function) : void;
+    on(t:'onOpenDataChannel', f:(d:PeerConnection.ChannelInfo) => void) : void;
+    on(t:'onReceived', f:(d:PeerConnection.ChannelMessage) => void) : void;
+    on(t:'onClose', f:() => void) : void;
+    on(t:'onCloseDataChannel', f:(d:PeerConnection.ChannelInfo) => void) : void;
+
+    // Given a channel Label, returns the buffered amount on that channel.
+    getBufferedAmount(string) : Promise<number>;
   }
 }
