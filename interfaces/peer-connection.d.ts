@@ -50,6 +50,6 @@ declare module freedom {
 
     // Given a channel Label, returns the buffered amount on that channel. TODO:
     // this should probably not be exposed. buffering should be handled inside.
-    getBufferedAmount(string) : Promise<number>;
+    getBufferedAmount(channelLabel:string) : Promise<number>;
   }
 }
