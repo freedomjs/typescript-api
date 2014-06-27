@@ -28,7 +28,7 @@ declare module freedom {
     // interface for it.
     bindChannel(identifier:ChannelEndpointIdentifier) : Promise<Channel>;
     // Returns the list of identifiers describing the dependency path.
-    getId() : string[];
+    getId() : Promise<string[]>;
   }
   function core() : Core
 
