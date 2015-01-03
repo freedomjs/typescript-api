@@ -1,16 +1,23 @@
 /// <reference path='../../third_party/promise/promise.d.ts' />
 
 // Common on/emit for message passing interfaces.
-interface OnAndEmit {
-  on(eventType:string, handler:Function) : void;
-  emit(eventType:string, value:Object) : void;
+interface EventDispatchFn<T> { (eventType:string, value:T) : void; }
+interface EventHandlerFn<T> { (eventType:string, handler:(eventData:T) => void) : void; }
+
+interface OnAndEmit<T,T2> {
+  on   :EventHandlerFn<T>;
+  emit :EventDispatchFn<T2>;
 }
 
 declare module freedom {
   // The freedom object's on/emit communicate with the parent module. If this is
   // the outer-page, then on/emit communicate with the root module.
-  function on(eventType:string, eventHandler:Function) : void
-  function emit(eventType:string, value :Object) : void
+  var on :EventHandlerFn<Object>;
+  var emit :EventDispatchFn<Object>;
+
+  interface PortModule<T,T2> extends OnAndEmit<T,T2> {
+    controlChannel :string;
+  }
 
   /*
   // for freedom 0.5, the contextual freedom code that loads up the module
@@ -23,22 +30,23 @@ declare module freedom {
   // See |Core_unprivileged| in |core.unprivileged.js|
   interface Core {
     // Create a new channel which which to communicate between modules.
-    createChannel() : Promise<ChannelSpecifier>;
+    createChannel<T,T2>() : Promise<ChannelSpecifier<T,T2>>;
     // Given an ChannelEndpointIdentifier for a channel, create a proxy event
     // interface for it.
-    bindChannel(identifier:ChannelEndpointIdentifier) : Promise<Channel>;
+    bindChannel<T,T2>(identifier:ChannelEndpointIdentifier)
+        : Promise<Channel<T,T2>>;
     // Returns the list of identifiers describing the dependency path.
     getId() : Promise<string[]>;
   }
   function core() : Core
 
   // Channels are ways that freedom modules can send each other messages.
-  interface Channel extends OnAndEmit {
+  interface Channel<T,T2> extends OnAndEmit<T,T2> {
     close() : void;
   }
   // Specification for a channel.
-  interface ChannelSpecifier {
-    channel     :Channel;  // How to communicate over this channel.
+  interface ChannelSpecifier<T,T2> {
+    channel     :Channel<T,T2>;  // How to communicate over this channel.
     identifier  :ChannelEndpointIdentifier;
   }
   // An endpoint identifier for a channel. Can be passed over a freedom message-
